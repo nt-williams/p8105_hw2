@@ -1,30 +1,38 @@
 ---
-title: "Untitled"
+title: "Data Science I: Homework 2"
+author: "Nick Williams"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
-## GitHub Documents
+## Problem 1
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+### Importing data
 
-## Including Code
-
-You can include R code in the document as follows:
-
-```{r cars}
-summary(cars)
+```{r importing data, collapse = TRUE}
+nyc_transit_data <- read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 ```
 
-## Including Plots
+### Tidying data
 
-You can also embed plots, for example:
+```{r tidying data, collapse = TRUE}
+nyc_transit_data <- nyc_transit_data %>% 
+  janitor::clean_names() %>% 
+  select(line:entry, 
+         vending, 
+         ada) 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+nyc_transit_data <- nyc_transit_data %>%
+  gather(key = route_number, value = route_name, route1:route11) %>%
+  separate(route_number,
+           into = c("delete", "route_number"),
+           sep = 5) %>%
+  select(-delete)
+
+nyc_transit_data$entry <- ifelse(nyc_transit_data$entry == "YES", TRUE, FALSE)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
