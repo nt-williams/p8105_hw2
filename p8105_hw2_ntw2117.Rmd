@@ -6,8 +6,10 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 library(tidyverse)
 library(readxl)
+library(ggplot2)
 ```
 
 ## Problem 1
@@ -48,7 +50,7 @@ nyc_transit_data <- nyc_transit_data %>%
 ```
 
 - `r nrow(filter(distinct(nyc_transit_data, line, station_name, route_name), route_name == "A"))` distinct stations serve the A train. 
-- `r nrow(filter(distinct(nyc_transit_data, line, station_name, route_name, ada), route_name == "A", ada == TRUE))` of these stations are ADA compliant
+- `r nrow(filter(distinct(nyc_transit_data, line, station_name, route_name, ada), route_name == "A", ada == TRUE))` of these stations are ADA compliant.
 
 ## Problem 2
 
@@ -96,7 +98,33 @@ precip_data <- precip_16_data %>%
                mutate(month = month.name[month])
 ```
 
-The dataset "trash_wheel_data" has `r nrow(trash_wheel_data)` observations and contains dumpster specific trash content information for the Mr. Trash Wheel in Baltimore from 2014 to 2017. The median number of sports balls in a dumpster in 2017 was `r trash_wheel_data %>% filter(year == "2017") %>% summarise(median(sports_balls))`. The dataset "precip_data" has `r nrow(precip_data)` observations and contains information on the amount of precipitation (in inches) during 2016 and 2017 by month in Baltimore. In 2017, the total precipitation based on available data was `r precip_data %>% filter(year == "2017") %>% summarise(sum(total))` inches.
+The dataset `trash_wheel_data` has `r nrow(trash_wheel_data)` observations and contains dumpster specific trash content information for the Mr. Trash Wheel in Baltimore from 2014 to 2017. The median number of sports balls in a dumpster in 2017 was `r trash_wheel_data %>% filter(year == "2017") %>% summarise(median(sports_balls))`. The dataset `precip_data` has `r nrow(precip_data)` observations and contains information on the amount of precipitation (in inches) during 2016 and 2017 by month in Baltimore. In 2017, the total precipitation based on available data was `r precip_data %>% filter(year == "2017") %>% summarise(sum(total))` inches.
+
+## Problem 3
+
+```{r}
+brfss_data <- p8105.datasets::brfss_smart2010 %>% 
+                janitor::clean_names() %>% 
+                rename(state = locationabbr,
+                       county = locationdesc) %>% 
+                filter(topic == "Overall Health") %>% 
+                select(-(class:question), 
+                       -sample_size, 
+                       -(confidence_limit_low:geo_location))
+
+brfss_data <- brfss_data %>%
+  spread(key = response, value = data_value) %>% 
+  janitor::clean_names() %>%
+  mutate(prop_very_good_excel =  
+           (excellent + very_good) / (excellent + fair + good + poor + very_good))
+```
+
+```{r warning = FALSE, message = FALSE}
+brfss_data %>% 
+  filter(year == "2002") %>% 
+  ggplot(aes(x = excellent)) + 
+  geom_histogram()
+```
 
 
 
