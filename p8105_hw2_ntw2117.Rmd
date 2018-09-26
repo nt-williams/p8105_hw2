@@ -51,9 +51,10 @@ trash_wheel_data <- read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xl
 
 ```{r trash wheel tidying}
 trash_wheel_data <- trash_wheel_data %>% 
-  janitor::clean_names() %>% 
-  filter(!is.na(dumpster)) %>% 
-  mutate(sports_balls = as.integer(sports_balls))
+                      janitor::clean_names() %>% 
+                      filter(!is.na(dumpster), 
+                             month != "Grand Total") %>% 
+                      mutate(sports_balls = as.integer(sports_balls))
 ```
 
 #### Importing and cleaning precipitation data
@@ -81,6 +82,9 @@ precip_data <- precip_16_data %>%
                bind_rows(precip_17_data) %>%
                mutate(month = month.name[month])
 ```
+
+The dataset "trash_wheel_data" has `r nrow(trash_wheel_data)` observations and contains dumpster specific trash content information for the Mr. Trash Wheel in Baltimore from 2014 to 2017. The median number of sports balls in a dumpster in 2017 was `r trash_wheel_data %>% filter(year == "2017") %>% summarise(median(sports_balls))`. The dataset "precip_data" has `r nrow(precip_data)` observations and contains information on the amount of precipitation (in inches) during 2016 and 2017 by month in Baltimore. In 2017, the total precipitation based on available data was `r precip_data %>% filter(year == "2017") %>% summarise(sum(total))` inches.
+
 
 
 
