@@ -18,7 +18,7 @@ library(readxl)
 nyc_transit_data <- read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 ```
 
-#### NYC transit tidying
+#### NYC transit cleaning
 
 ```{r tidying data, collapse = TRUE}
 nyc_transit_data <- nyc_transit_data %>% 
@@ -27,15 +27,20 @@ nyc_transit_data <- nyc_transit_data %>%
          vending, 
          ada) 
 
-nyc_transit_data <- nyc_transit_data %>%
-  gather(key = route_number, value = route_name, route1:route11) %>%
-  separate(route_number,
-           into = c("delete", "route_number"),
-           sep = 5) %>%
-  select(-delete)
-
 nyc_transit_data$entry <- ifelse(nyc_transit_data$entry == "YES", TRUE, FALSE)
 ```
+
+#### Tidying transit data
+
+```{r nyc transit wide to long}
+nyc_transit_data <- nyc_transit_data %>%
+                      gather(key = route_number, value = route_name, route1:route11) %>%
+                      separate(route_number,
+                               into = c("delete", "route_number"),
+                               sep = 5) %>%
+                      select(-delete)
+```
+
 
 ## Problem 2
 
