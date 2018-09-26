@@ -7,6 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(readxl)
 ```
 
 ## Problem 1
@@ -17,7 +18,7 @@ library(tidyverse)
 nyc_transit_data <- read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 ```
 
-### Tidying data
+### NYC transit tidying
 
 ```{r tidying data, collapse = TRUE}
 nyc_transit_data <- nyc_transit_data %>% 
@@ -35,4 +36,26 @@ nyc_transit_data <- nyc_transit_data %>%
 
 nyc_transit_data$entry <- ifelse(nyc_transit_data$entry == "YES", TRUE, FALSE)
 ```
+
+## Problem 2
+
+### Importing Mr. Trash Wheel data 
+
+```{r trash wheel import}
+trash_wheel_data <- read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+                               sheet = "Mr. Trash Wheel", 
+                               range = cell_cols("A:N")) 
+```
+
+### Tidying Mr. Trash Wheel
+
+```{r trash wheel tidying}
+trash_wheel_data <- trash_wheel_data %>% 
+  janitor::clean_names() %>% 
+  filter(!is.na(dumpster)) %>% 
+  mutate(sports_balls = as.integer(sports_balls))
+```
+
+
+
 
