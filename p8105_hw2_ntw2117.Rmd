@@ -14,7 +14,7 @@ library(readxl)
 
 #### Importing data
 
-```{r importing data, collapse = TRUE}
+```{r importing data, collapse = TRUE, message = FALSE}
 nyc_transit_data <- read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 ```
 
