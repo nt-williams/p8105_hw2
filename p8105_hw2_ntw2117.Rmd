@@ -12,13 +12,13 @@ library(readxl)
 
 ## Problem 1
 
-### Importing data
+#### Importing data
 
 ```{r importing data, collapse = TRUE}
 nyc_transit_data <- read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 ```
 
-### NYC transit tidying
+#### NYC transit tidying
 
 ```{r tidying data, collapse = TRUE}
 nyc_transit_data <- nyc_transit_data %>% 
@@ -39,7 +39,7 @@ nyc_transit_data$entry <- ifelse(nyc_transit_data$entry == "YES", TRUE, FALSE)
 
 ## Problem 2
 
-### Importing Mr. Trash Wheel data 
+#### Importing Mr. Trash Wheel data 
 
 ```{r trash wheel import}
 trash_wheel_data <- read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
@@ -47,13 +47,37 @@ trash_wheel_data <- read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xl
                                range = cell_cols("A:N")) 
 ```
 
-### Tidying Mr. Trash Wheel
+#### Tidying Mr. Trash Wheel
 
 ```{r trash wheel tidying}
 trash_wheel_data <- trash_wheel_data %>% 
   janitor::clean_names() %>% 
   filter(!is.na(dumpster)) %>% 
   mutate(sports_balls = as.integer(sports_balls))
+```
+
+#### Importing and cleaning precipitation data
+
+```{r precipitation data import, collapse = TRUE}
+precip_16_data <-
+  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+             sheet = "2016 Precipitation", 
+             range = "A2:B14") %>%
+  janitor::clean_names() %>%
+  mutate(year = 2016)
+
+precip_17_data <- 
+  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+             sheet = "2017 Precipitation",
+             range = "A2:B10") %>% 
+  janitor::clean_names() %>% 
+  mutate(year = 2017)
+```
+
+#### Tidying precipitation data
+
+```{r}
+
 ```
 
 
