@@ -74,10 +74,12 @@ precip_17_data <-
   mutate(year = 2017)
 ```
 
-#### Tidying precipitation data
+#### Combining precipitation data
 
 ```{r}
-
+precip_data <- precip_16_data %>% 
+               bind_rows(precip_17_data) %>%
+               mutate(month = month.name[month])
 ```
 
 
