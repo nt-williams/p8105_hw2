@@ -134,7 +134,7 @@ max_record <- count(brfss_data, state) %>%
   filter(n == max(n))
 ```
 
-- There are `r nrow(distinct(brfss_data, county))` distinct locations in the dataset. Every state, and the District of Columbia are represented. The state with the most observations is`r max_record$state` with `r max_record$n` observations. 
+- There are `r nrow(distinct(brfss_data, county))` distinct locations in the dataset. Every state, and the District of Columbia are represented. The state with the most observations is `r max_record$state` with `r max_record$n` observations. 
 
 - In 2002, the median excellent response value was `r brfss_data %>% filter(year == "2002") %>% summarise(median(excellent, na.rm = TRUE))`.
 
