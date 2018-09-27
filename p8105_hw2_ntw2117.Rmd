@@ -5,7 +5,12 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 9,
+  fig.asp = .6,
+  out.width = "90%"
+  )
 
 library(tidyverse)
 library(readxl)
@@ -119,18 +124,24 @@ brfss_data <- brfss_data %>%
            (excellent + very_good) / (excellent + fair + good + poor + very_good))
 ```
 
-```{r warning = FALSE, message = FALSE}
+```{r histogram, warning = FALSE, message = FALSE}
 brfss_data %>% 
   filter(year == "2002") %>% 
   ggplot(aes(x = excellent)) + 
-  geom_histogram()
+  geom_histogram() + 
+  labs(x = "Excellent", 
+       y = "Count") + 
+  theme_bw()
 ```
 
-```{r}
+```{r scatter plot}
 brfss_data %>% 
   filter(county %in% c("NY - New York County", "NY - Queens County")) %>% 
   ggplot(aes(x = year, y = prop_very_good_excel, color = county)) + 
-  geom_point()
+  geom_point() + 
+  labs(x = "Year", 
+       y = "Proportion very good or excellent") + 
+  theme_bw()
 ```
 
 
