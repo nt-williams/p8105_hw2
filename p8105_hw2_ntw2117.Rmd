@@ -142,7 +142,7 @@ brfss_data %>%
   theme_bw()
 ```
 
-```{r scatter plot}
+```{r scatter plot, fig.width = 9}
 brfss_data %>% 
   filter(county %in% c("NY - New York County", "NY - Queens County")) %>% 
   mutate(prop_excellent = excellent / (excellent + fair + good + poor + very_good)) %>% 
