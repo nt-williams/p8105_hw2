@@ -127,7 +127,9 @@ brfss_data <- brfss_data %>%
 #### Answers to questions
 
 - There are `r nrow(distinct(brfss_data, county))` distinct locations in the dataset. Every state, and the District of Columbia are represented. NEED TO FINSIH THIS QUESTION. 
-- In 2002, the median excellent response value was `r brfss_data %>% filter(year == "2002") %>% summarise(median(excellent, na.rm = TRUE))`
+- In 2002, the median excellent response value was `r brfss_data %>% filter(year == "2002") %>% summarise(median(excellent, na.rm = TRUE))`.
+
+#### Plots
 
 ```{r histogram, warning = FALSE, message = FALSE}
 brfss_data %>% 
@@ -145,9 +147,10 @@ brfss_data %>%
   filter(county %in% c("NY - New York County", "NY - Queens County")) %>% 
   mutate(prop_excellent = excellent / (excellent + fair + good + poor + very_good)) %>% 
   ggplot(aes(x = year, y = prop_excellent, color = county)) + 
-  geom_point() + 
+  geom_point(size = 5) + 
   labs(x = "Year", 
-       y = "Proportion excellent") + 
+       y = "Proportion excellent", 
+       title = "Excellent response in New York and Queens County, 2002-2010") + 
   theme_bw()
 ```
 
