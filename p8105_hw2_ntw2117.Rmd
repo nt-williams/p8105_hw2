@@ -137,10 +137,11 @@ brfss_data %>%
 ```{r scatter plot}
 brfss_data %>% 
   filter(county %in% c("NY - New York County", "NY - Queens County")) %>% 
-  ggplot(aes(x = year, y = prop_very_good_excel, color = county)) + 
+  mutate(prop_excellent = excellent / (excellent + fair + good + poor + very_good)) %>% 
+  ggplot(aes(x = year, y = prop_excellent, color = county)) + 
   geom_point() + 
   labs(x = "Year", 
-       y = "Proportion very good or excellent") + 
+       y = "Proportion excellent") + 
   theme_bw()
 ```
 
