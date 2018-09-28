@@ -140,26 +140,30 @@ max_record <- count(brfss_data, state) %>%
 
 #### Plots
 
-```{r histogram, warning = FALSE, message = FALSE}
+```{r histogram, warning = FALSE, message = FALSE, fig.align = "center"}
 brfss_data %>% 
   filter(year == "2002") %>% 
   ggplot(aes(x = excellent)) + 
   geom_histogram(fill = "blue", alpha = 0.5) + 
   labs(x = "Excellent", 
        y = "Count", 
-       title = "Histogram of excellent response values in 2002") + 
+       caption = "Histogram of excellent response values in 2002") + 
   theme_bw()
 ```
 
-```{r scatter plot}
+```{r scatter plot, fig.align = "center"}
 brfss_data %>% 
   filter(county %in% c("NY - New York County", "NY - Queens County")) %>% 
   mutate(prop_excellent = excellent / (excellent + fair + good + poor + very_good)) %>% 
   ggplot(aes(x = year, y = prop_excellent, color = county)) + 
   geom_point(size = 4) + 
+  scale_color_discrete(
+    name = "Location", 
+    labels = c("New York County", "Queens County")
+  ) +
   labs(x = "Year", 
        y = "Proportion excellent", 
-       title = "Excellent response in New York and Queens County, 2002-2010") + 
+       caption = "Excellent response in New York and Queens County, 2002-2010") + 
   theme_bw()
 ```
 
