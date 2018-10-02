@@ -157,11 +157,12 @@ brfss_data %>%
   mutate(prop_excellent = excellent / (excellent + fair + good + poor + very_good)) %>% 
   ggplot(aes(x = year, y = prop_excellent, color = county)) + 
   geom_point(size = 4) + 
-  scale_color_brewer(
+  viridis::scale_color_viridis(
     name = "", 
-    labels = c("New York County", "Queens County"), 
-    palette = "Paired"
-  ) +
+    labels = c("New York County", "Queens County"),
+    discrete = TRUE
+  ) + 
+  scale_y_continuous(limits = c(0, .35)) + 
   labs(x = "Year", 
        y = "Proportion excellent", 
        caption = "Excellent response values in New York and Queens County, 2002-2010") + 
