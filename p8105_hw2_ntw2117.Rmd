@@ -61,7 +61,7 @@ nyc_transit_data <- nyc_transit_data %>%
 #### Importing Mr. Trash Wheel data 
 
 ```{r trash wheel import}
-trash_wheel_data <- read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+trash_wheel_data <- read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
                                sheet = "Mr. Trash Wheel", 
                                range = cell_cols("A:N")) 
 ```
@@ -80,14 +80,14 @@ trash_wheel_data <- trash_wheel_data %>%
 
 ```{r precipitation data import, collapse = TRUE}
 precip_16_data <-
-  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
              sheet = "2016 Precipitation", 
              range = "A2:B14") %>%
   janitor::clean_names() %>%
   mutate(year = 2016)
 
 precip_17_data <- 
-  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
              sheet = "2017 Precipitation",
              range = "A2:B10") %>% 
   janitor::clean_names() %>% 
